@@ -39,8 +39,8 @@ app.use(csurf({ cookie: true }));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
 // routes
-app.use("./auth", authRoutes);
-app.use("./api", protectedRoutes);
+app.use("/auth", authRoutes);
+app.use("/api", protectedRoutes);
 
 //global error handling
 app.use((err, req, res, next) => {
