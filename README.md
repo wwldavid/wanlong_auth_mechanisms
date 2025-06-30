@@ -39,3 +39,5 @@ In this part, I implemented a dual authentication strategy that combines local u
 
 In my schema.prisma, I added a string-type role field to the user model to distinguish between regular users and admins. Then, I created two middleware functions in src>middleware>auth.js, ensureAuthenticatec: blocks unauthenticated requests and return a 401 error. requireRole: checks whether req.user.role matches the required role and return a 403 error if not.
 At routing, I applied ensureAuthenticated to /api/profile, allowing all logged-in users to view. For /api/admiin, I used both ensureAuthenticated and requireRole so that only admins can access sensitive data. To make role management extensible, I used the RequireRole('role') pattern.
+
+8. npm install jsonwebtoken
