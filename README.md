@@ -41,3 +41,5 @@ In my schema.prisma, I added a string-type role field to the user model to disti
 At routing, I applied ensureAuthenticated to /api/profile, allowing all logged-in users to view. For /api/admiin, I used both ensureAuthenticated and requireRole so that only admins can access sensitive data. To make role management extensible, I used the RequireRole('role') pattern.
 
 8. npm install jsonwebtoken
+
+9. npx prisma generate
