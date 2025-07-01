@@ -1,4 +1,4 @@
-# wanlong_auth_mechanisms
+## wanlong_auth_mechanisms
 
 A secure authentication system built with Node.js, Express, Prisma and Passport.js.
 
