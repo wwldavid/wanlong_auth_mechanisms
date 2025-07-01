@@ -5,14 +5,28 @@ const router = express.Router();
 
 const { verifyToken, generateAccessToken } = require("../utils/jwt");
 const { PrismaClient } = require("@prisma/client");
+const { default: rateLimit } = require("express-rate-limit");
 const prisma = new PrismaClient();
+
+// Apply rare limiting specifically to the /auth/login route.
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  keyGenerator: (req) => req.body.email || req.ip,
+  handler: (req, res) => {
+    res
+      .status(429)
+      .json({ message: "Too many login attempts, please try again later." });
+  },
+});
 
 // local register  /auth/register
 router.post("/register", register);
 
-// local login  /auth/login
+// local login  /auth/login (apply rate limiting first, then authenticate, and finally execute the login controller)
 router.post(
   "/login",
+  loginLimiter,
   passport.authenticate("local", { failureStatus: 401 }),
   login
 );

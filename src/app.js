@@ -25,17 +25,33 @@ app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: { httpOnly: true, secure: false },
+    resave: false, // Do not save the session back to the store if it hasn't been modified during the request.
+    saveUninitialized: false, // Do not save unmodified new sessions to the store and do not send set-cookie headers for them.
+    // This avoids storing empty sessions and prevents sending cookies before user interaction.
+    cookie: {
+      httpOnly: true, //  Prevent client-side JavaScript from accessing the cookie
+      secure: process.env.NODE_ENV === "production", // Send cookie only over HTTPS in production
+      sameSite: "strict", // Protect against CSRF attacks
+      maxAge: 30 * 60 * 1000, // Session expires after 30 minutes of inactivityy
+    },
   })
 );
+
+app.use((req, res, next) => {
+  if (req.session) {
+    req.session._garbage = Date(); // Write a dummy field (_garbage) with the current timestamp to flag the session as mofified(dirty).
+
+    req.session.touch(); // call express-session's touch() to extend req.session.cookie.expire by maxAge and reset cookie.maxAge.
+  }
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 //CSRF
-app.use(csurf({ cookie: true }));
-// global rate limiting and login-specific rate limiting
+app.use(csurf({ cookie: true })); // CSRF protection is applied to all state-changing routes(POST,PUT, DELETE)
+// Rate limiting is applied as a defense against brute-force login attempts.
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
 app.get("/csrf-token", (req, res) => {

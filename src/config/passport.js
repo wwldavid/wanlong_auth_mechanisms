@@ -12,12 +12,13 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user || !user.passwordHash) {
-          return done(null, false, { message: "wrong email or password" });
-        }
-        const match = await bcrypt.compare(password, user.passwordHash);
-        if (!match) {
-          return done(null, false, { message: "wrong email or password" });
+        // Return the same error message for both 'user not found' and 'wrong password'to prevent user enumeration.
+        if (
+          !user ||
+          !user.passwordHash ||
+          !(await bcrypt.compare(password, user.passwordHash))
+        ) {
+          return done(null, false, { message: "Invalid credentials" });
         }
         return done(null, user);
       } catch (err) {
@@ -35,16 +36,16 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:4000/auth/google/callback",
     },
-    async (accessToken, refreshToken, profiler, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await prisma.user.findUnique({
-          where: { googleId: profiler.id },
+          where: { googleId: profile.id },
         });
         if (!user) {
           user = await prisma.user.create({
             data: {
-              googleId: profiler.id,
-              email: profiler.emails[0].value,
+              googleId: profile.id,
+              email: profile.emails[0].value,
             },
           });
         }
