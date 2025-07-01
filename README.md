@@ -48,6 +48,8 @@ GOOGLE_CLIENT_SECRET
    (prisma/schema.prisma: file where I define my data models)
    (.env automatically includes a DATABASE_URL, which by default points to file: ./dev.db)
 
+### Google Cloud Console
+
 7. create a pair of OAuth2 credentials in Google Cloud Console to obtain GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET
 
 8. npx prisma migrate dev --name init
