@@ -1,6 +1,6 @@
 ### wanlong_auth_mechanisms
 
-A secure, scalable authentication system built with Node.js, Express, Prisma and Passport.js.
+A secure authentication system built with Node.js, Express, Prisma and Passport.js.
 
 ### Setting Up the Repository
 
