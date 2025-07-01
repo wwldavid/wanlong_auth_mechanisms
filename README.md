@@ -6,7 +6,6 @@ A secure authentication system built with Node.js, Express, Prisma and Passport.
 
 1. Clone the repo
    git clone https://github.com/wwldavid/wanlong_auth_mechanisms.git
-   cd wanlong_auth_mechanisms
 
 ### Copy and configure environment variables
 
