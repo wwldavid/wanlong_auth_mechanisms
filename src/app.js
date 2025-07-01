@@ -38,6 +38,11 @@ app.use(csurf({ cookie: true }));
 // global rate limiting and login-specific rate limiting
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 
+app.get("/csrf-token", (req, res) => {
+  // 把生成的 token 返回给客户端
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 // routes
 app.use("/auth", authRoutes);
 app.use("/api", protectedRoutes);

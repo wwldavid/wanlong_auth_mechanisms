@@ -43,3 +43,9 @@ At routing, I applied ensureAuthenticated to /api/profile, allowing all logged-i
 8. npm install jsonwebtoken
 
 9. npx prisma generate
+
+## Reflection - Part C JWT
+
+I have stored both the access_token and refresh_token in HttpOnly cookies. This helps prevent XSS attacks since JavaScript can't access these cookies, making it more secure than using localStorage. With SameSite='Strict' setting, it also reduces the risk of CSRF attacks.
+The access_token expires in 15 minutes to limit the window for potential misuse. The refresh_token lasts for 7 days, so users don't have to log in frequently. By calling auth/refresh, user can get a new access_token. Using cookies for token storage need to enable cors and set the secure flag on the server. This approach avoids storing sensitive tokens in the client and also removes the need to manually add authorization headers for every request.
+One problem I faced was: How to detect if the token is expired and handle it smoothly, instead of always sending the user back to the login page. My solution: In the middleware, I used 401 if the token is missing(the user didn't log in), 403 if the token is invalid or expired. If the frone end sees 403, it knows "the token is expired", it can automatically refresh the token using /auth/refresh; If it sees 401, it knows the user isn't logged in, then redirect to login. This makes the app both secure and user-freindly, invalid tokens are blocked and users don't get logged out just because the token expired.
