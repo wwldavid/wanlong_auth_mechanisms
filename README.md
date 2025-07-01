@@ -32,32 +32,32 @@ A secure authentication system built with Node.js, Express, Prisma and Passport.
 
 ### Copy and configure environment variables
 
-cp .env.example .env
-then edit .env to set:
-DATABASE_URL
-SESSION_SECRET
-JWT_SECRET
-GOOGLE_CLIENT_ID
-GOOGLE_CLIENT_SECRET
+5. cp .env.example .env
+   then edit .env to set:
+   DATABASE_URL
+   SESSION_SECRET
+   JWT_SECRET
+   GOOGLE_CLIENT_ID
+   GOOGLE_CLIENT_SECRET
 
-### database
+### Database
 
-5. npm install -D prisma
+6. npm install -D prisma
    (CLI tool used for database migrations and generating the client)
 
-6. npm install @prisma/client
+7. npm install @prisma/client
    (@prisma/client: ORM client used in code to interact with the database)
 
-7. npx prisma init --datasource-provider sqlite
+8. npx prisma init --datasource-provider sqlite
    (prisma/schema.prisma: file where I define my data models)
    (.env automatically includes a DATABASE_URL, which by default points to file: ./dev.db)
 
-8. npx prisma migrate dev --name init
+9. npx prisma migrate dev --name init
 
-9. Generate Prisma client
-   npx prisma generate
+10. Generate Prisma client
+    npx prisma generate
 
-10. Start the server
+11. Start the server
     node src/app.js
 
 ## Authentication Mechanisms
