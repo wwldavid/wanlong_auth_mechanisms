@@ -36,21 +36,21 @@ GOOGLE_CLIENT_SECRET
    express-rate-limit: rate limiting(to prevent brute-force attacks);
    jsonwebtoken: Sign/verify JSON Web Token)
 
-### database
-
-4. npm install -D prisma
-   (CLI tool used for database migrations and generating the client)
-
-5. npm install @prisma/client
-   (@prisma/client: ORM client used in code to interact with the database)
-
-6. npx prisma init --datasource-provider sqlite
-   (prisma/schema.prisma: file where I define my data models)
-   (.env automatically includes a DATABASE_URL, which by default points to file: ./dev.db)
-
 ### Google Cloud Console
 
-7. create a pair of OAuth2 credentials in Google Cloud Console to obtain GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET
+4. create a pair of OAuth2 credentials in Google Cloud Console to obtain GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET
+
+### database
+
+5. npm install -D prisma
+   (CLI tool used for database migrations and generating the client)
+
+6. npm install @prisma/client
+   (@prisma/client: ORM client used in code to interact with the database)
+
+7. npx prisma init --datasource-provider sqlite
+   (prisma/schema.prisma: file where I define my data models)
+   (.env automatically includes a DATABASE_URL, which by default points to file: ./dev.db)
 
 8. npx prisma migrate dev --name init
 
