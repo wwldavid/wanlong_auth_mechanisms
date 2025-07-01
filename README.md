@@ -7,16 +7,6 @@ A secure authentication system built with Node.js, Express, Prisma and Passport.
 1. Clone the repo
    git clone https://github.com/wwldavid/wanlong_auth_mechanisms.git
 
-### Copy and configure environment variables
-
-cp .env.example .env
-then edit .env to set:
-DATABASE_URL
-SESSION_SECRET
-JWT_SECRET
-GOOGLE_CLIENT_ID
-GOOGLE_CLIENT_SECRET
-
 ### Install dependencies
 
 2. npm install express helmet morgan dotenv cookie-parser cors
@@ -39,6 +29,16 @@ GOOGLE_CLIENT_SECRET
 ### Google Cloud Console
 
 4. create a pair of OAuth2 credentials in Google Cloud Console to obtain GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET
+
+### Copy and configure environment variables
+
+cp .env.example .env
+then edit .env to set:
+DATABASE_URL
+SESSION_SECRET
+JWT_SECRET
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
 
 ### database
 
